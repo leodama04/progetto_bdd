@@ -21,13 +21,13 @@ def run_modify_query(query, params=None):
 
 # --- OPERAZIONI CLIENTE ---
 
-def iscrizione_utente(ruolo, password, data_di_nascita, nome, cognome, telefono):
+def iscrizione_utente(id_utente, ruolo, password, data_di_nascita, nome, cognome, telefono):
     query = """
     INSERT INTO UTENTE (
-      ruolo, password, data_di_nascita, nome, cognome, telefono
-    ) VALUES (%s, %s, %s, %s, %s, %s)
+      id_utente, ruolo, password, data_di_nascita, nome, cognome, telefono
+    ) VALUES (%s, %s, %s, %s, %s, %s, %s)
     """
-    params = [ruolo, password, data_di_nascita, nome, cognome, telefono]
+    params = [id_utente, ruolo, password, data_di_nascita, nome, cognome, telefono]
     return run_modify_query(query, params)
 
 def login_utente(nome, password):

@@ -58,10 +58,6 @@ def logout_view(request):
     request.session.flush()
     return redirect('login')
 
-
-def success_page_view(request):
-    return render(request, 'success_page.html')
-
 # --- UTENTE ---
 
 def registra_utente(request):
@@ -70,10 +66,16 @@ def registra_utente(request):
         if form.is_valid():
             data = form.cleaned_data
             iscrizione_utente(
-                data['ruolo'], data['password'], data['data_di_nascita'],
-                data['nome'], data['cognome'], data.get('telefono', '')
+                data['id_utente'],
+                data['ruolo'],
+                data['password'],
+                data['data_di_nascita'],
+                data['nome'],
+                data['cognome'],
+                data.get('telefono', '')
+            
             )
-            return redirect('success_page')
+            return redirect('home')  
     else:
         form = UtenteForm()
     return render(request, 'registrazione.html', {'form': form})
