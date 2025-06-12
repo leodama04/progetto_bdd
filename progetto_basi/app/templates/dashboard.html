@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h2>Benvenuto nella tua dashboard!</h2>
+
+<ul>
+    <li><a href="{% url 'area_personale_biglietti' %}">I miei biglietti</a></li>
+    <li><a href="{% url 'area_personale_richieste' %}">Le mie richieste</a></li>
+    <li><a href="{% url 'area_personale_serate_acquistate' %}">Le mie serate acquistate</a></li>
+
+    {% if user_is_admin %}
+    <li><a href="{% url 'aggiungi_evento_view' %}">Aggiungi Evento (Admin)</a></li>
+    <li><a href="{% url 'accetta_rifiuta_richiesta_view' %}">Gestisci richieste (Admin)</a></li>
+    <!-- altri link admin -->
+    {% endif %}
+</ul>
+
+<a href="{% url 'logout' %}">Logout</a>
+
+{% endblock %}

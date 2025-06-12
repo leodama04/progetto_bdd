@@ -1,0 +1,13 @@
+{% extends "form_base.html" %}
+{% block title %}Login{% endblock %}
+{% block header %}Login Utente{% endblock %}
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+  <p><label for="id_nome">Nome:</label>
+  <input type="text" id="id_nome" name="nome" required></p>
+  <p><label for="id_password">Password:</label>
+  <input type="password" id="id_password" name="password" required></p>
+  <button type="submit">Accedi</button>
+</form>
+{% endblock %}

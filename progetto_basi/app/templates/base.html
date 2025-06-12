@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}SITO DISCOTECA{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0; 
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #004080;
+            color: white;
+            padding: 1em 2em;
+        }
+        nav a {
+            color: white;
+            margin-right: 20px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav a:hover {
+            text-decoration: underline;
+        }
+        main {
+            padding: 2em;
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            min-height: 75vh;
+        }
+        footer {
+            background-color: #004080;
+            color: white;
+            text-align: center;
+            padding: 1em;
+            margin-top: 2em;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SITO DISCOTECA</h1>
+        <nav>
+            {% if request.session.id_utente %}
+                <!-- Link generali per utenti loggati -->
+                <a href="{% url 'dashboard' %}">Dashboard</a>
+                <a href="{% url 'mostra_serate_pubbliche' %}">Serate Pubbliche</a>
+                <a href="{% url 'area_personale_biglietti' %}">Biglietti</a>
+                <a href="{% url 'area_personale_richieste' %}">Richieste</a>
+                <a href="{% url 'area_personale_serate_acquistate' %}">Serate Acquistate</a>
+                <a href="{% url 'aggiungi_carta' %}">Aggiungi Carta</a>
+                <a href="{% url 'acquista_biglietto_view' %}">Acquista Biglietto</a>
+                <a href="{% url 'seleziona_tavolo_view' %}">Seleziona Tavolo</a>
+                <a href="{% url 'iscrizione_lista_pr_view' %}">Iscrizione Lista PR</a>
+                <a href="{% url 'richiesta_serata_privata_view' %}">Richiedi Serata Privata</a>
+                <a href="{% url 'acquisto_serata_privata_view' %}">Acquisto Serata Privata</a>
+
+                <!-- Se sei admin, mostra anche link amministratore -->
+                {% if request.session.ruolo == 'amministratore' %}
+                    <span style="margin-left:20px; font-weight:bold;">Amministrazione:</span>
+                    <a href="{% url 'aggiungi_evento_view' %}">Aggiungi Evento</a>
+                    <a href="{% url 'rimuovi_evento_view' codice_evento=1 %}">Rimuovi Evento</a>
+                    <a href="{% url 'accetta_rifiuta_richiesta_view' %}">Gestione Richieste</a>
+                    <a href="{% url 'aggiungi_artista_view' %}">Aggiungi Artista</a>
+                    <a href="{% url 'rimuovi_artista_view' %}">Rimuovi Artista</a>
+                    <a href="{% url 'aggiungi_lista_pr_view' %}">Aggiungi Lista PR</a>
+                    <a href="{% url 'rimuovi_lista_pr_view' %}">Rimuovi Lista PR</a>
+                    <a href="{% url 'aggiungi_tavolo_view' %}">Aggiungi Tavolo</a>
+                    <a href="{% url 'rimuovi_tavolo_view' %}">Rimuovi Tavolo</a>
+                {% endif %}
+
+                <a href="{% url 'logout' %}">Logout</a>
+
+            {% else %}
+                <!-- Link per utenti non loggati -->
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'registra_utente' %}">Registrazione</a>
+                <a href="{% url 'mostra_serate_pubbliche' %}">Serate Pubbliche</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Contenuto specifico di ogni pagina -->
+        {% endblock %}
+    </main>
+
+    <footer>
+        &copy; 2025 Gestione Eventi - Tutti i diritti riservati
+    </footer>
+</body>
+</html>

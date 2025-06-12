@@ -1,0 +1,12 @@
+{% extends "form_base.html" %}
+{% block title %}Le Mie Serate{% endblock %}
+{% block header %}Serate Acquistate{% endblock %}
+{% block content %}
+<ul>
+  {% for serata in serate %}
+    <li>{{ serata.nome }} - Data: {{ serata.data }} - Descrizione: {{ serata.descrizione }}</li>
+  {% empty %}
+    <li>Non hai serate acquistate.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

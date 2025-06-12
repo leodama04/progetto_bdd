@@ -1,0 +1,10 @@
+{% extends "form_base.html" %}
+{% block title %}Acquista Biglietto{% endblock %}
+{% block header %}Acquisto Biglietto{% endblock %}
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Acquista</button>
+</form>
+{% endblock %}

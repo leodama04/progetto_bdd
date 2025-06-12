@@ -1,0 +1,12 @@
+{% extends "form_base.html" %}
+{% block title %}Serate Pubbliche{% endblock %}
+{% block header %}Elenco Serate Pubbliche{% endblock %}
+{% block content %}
+<ul>
+  {% for serata in serate %}
+    <li>{{ serata.nome }} - {{ serata.data }} - {{ serata.descrizione }}</li>
+  {% empty %}
+    <li>Nessuna serata pubblica disponibile.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

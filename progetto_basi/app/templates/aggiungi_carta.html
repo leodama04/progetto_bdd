@@ -1,0 +1,10 @@
+{% extends "form_base.html" %}
+{% block title %}Aggiungi Carta di Credito{% endblock %}
+{% block header %}Inserisci Carta di Credito{% endblock %}
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Aggiungi Carta</button>
+</form>
+{% endblock %}

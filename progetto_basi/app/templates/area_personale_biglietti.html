@@ -1,0 +1,12 @@
+{% extends "form_base.html" %}
+{% block title %}I Miei Biglietti{% endblock %}
+{% block header %}Biglietti Acquistati{% endblock %}
+{% block content %}
+<ul>
+  {% for biglietto in biglietti %}
+    <li>Biglietto n. {{ biglietto.codice_biglietto }} - Evento: {{ biglietto.evento_nome }} - Data: {{ biglietto.data }}</li>
+  {% empty %}
+    <li>Non hai biglietti acquistati.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

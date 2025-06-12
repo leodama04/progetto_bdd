@@ -1,0 +1,11 @@
+{% extends "form_base.html" %}
+{% block title %}Iscrizione Lista PR{% endblock %}
+{% block header %}Iscriviti alla Lista PR{% endblock %}
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+  <p><label for="id_codice_lista">Codice Lista:</label>
+  <input type="text" id="id_codice_lista" name="codice_lista" required></p>
+  <button type="submit">Iscriviti</button>
+</form>
+{% endblock %}

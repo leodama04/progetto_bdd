@@ -1,0 +1,10 @@
+{% extends "form_base.html" %}
+{% block title %}Acquisto Serata Privata{% endblock %}
+{% block header %}Acquista Serata Privata{% endblock %}
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Acquista</button>
+</form>
+{% endblock %}

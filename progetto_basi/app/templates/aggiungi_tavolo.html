@@ -1,0 +1,13 @@
+{% extends "form_base.html" %}
+{% block title %}Aggiungi Tavolo{% endblock %}
+{% block header %}Nuovo Tavolo{% endblock %}
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+  <p><label for="id_codice_evento">Codice Evento:</label>
+  <input type="text" id="id_codice_evento" name="codice_evento" required></p>
+  <p><label for="id_numero_posti">Numero Posti:</label>
+  <input type="number" id="id_numero_posti" name="numero_posti" required></p>
+  <button type="submit">Aggiungi Tavolo</button>
+</form>
+{% endblock %}

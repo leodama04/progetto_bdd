@@ -1,0 +1,12 @@
+{% extends "form_base.html" %}
+{% block title %}Le Mie Richieste{% endblock %}
+{% block header %}Richieste Serate Private{% endblock %}
+{% block content %}
+<ul>
+  {% for richiesta in richieste %}
+    <li>Richiesta n. {{ richiesta.codice_richiesta }} - Stato: {{ richiesta.stato }} - Data: {{ richiesta.data_serata }}</li>
+  {% empty %}
+    <li>Non hai richieste pendenti.</li>
+  {% endfor %}
+</ul>
+{% endblock %}
