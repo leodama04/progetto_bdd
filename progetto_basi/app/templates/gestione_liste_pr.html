@@ -1,0 +1,66 @@
+{% extends "form_base.html" %}
+
+{% block title %}Gestione Liste PR{% endblock %}
+{% block header %}Gestione Liste PR per Evento: {{ evento.nome }}{% endblock %}
+
+{% block content %}
+
+<h3>Aggiungi nuova lista PR</h3>
+<form method="post" action="">
+    {% csrf_token %}
+    <input type="hidden" name="azione" value="aggiungi">
+    
+    <label>Nome Lista: <input type="text" name="nome_lista" required></label><br>
+    
+    <label>Seleziona PR:
+        <select name="codice_pr" required>
+            {% for pr_item in pr %}
+                <option value="{{ pr_item.codice_pr }}">{{ pr_item.nome }} {{ pr_item.cognome }}</option>
+            {% endfor %}
+        </select>
+    </label><br>
+    
+    <button type="submit">Aggiungi Lista PR</button>
+</form>
+
+<hr>
+
+<h3>Liste PR esistenti</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nome Lista</th>
+            <th>Nome PR</th>
+            <th>Azione</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for lista in liste_pr %}
+        <tr>
+            <td>{{ lista.nome_lista }}</td>
+            <td>
+                {% for pr_item in pr %}
+                    {% if pr_item.codice_pr == lista.codice_pr %}
+                        {{ pr_item.nome }} {{ pr_item.cognome }}
+                    {% endif %}
+                {% endfor %}
+            </td>
+            <td>
+                <form method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="azione" value="rimuovi">
+                    <input type="hidden" name="codice_lista" value="{{ lista.codice_lista }}">
+                    <button type="submit" onclick="return confirm('Sei sicuro di voler rimuovere questa lista PR?');">Rimuovi</button>
+                </form>
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="3">Nessuna lista PR presente.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<br>
+<a href="{% url 'gestione_eventi' %}">Torna a Gestione Eventi</a>
+
+{% endblock %}

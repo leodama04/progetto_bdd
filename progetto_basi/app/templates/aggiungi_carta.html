@@ -1,10 +1,74 @@
 {% extends "form_base.html" %}
-{% block title %}Aggiungi Carta di Credito{% endblock %}
-{% block header %}Inserisci Carta di Credito{% endblock %}
+
+{% block title %}Gestione Carte{% endblock %}
+{% block header %}Aggiungi o Rimuovi Carte di Credito{% endblock %}
+
 {% block content %}
-<form method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Aggiungi Carta</button>
+
+<h3>Aggiungi Carta di Credito</h3>
+<form method="post">
+    {% csrf_token %}
+    <label>Numero Carta:
+        <input type="text" name="numero_di_carta" required>
+    </label><br>
+
+    <label>Nome Titolare:
+        <input type="text" name="nome_titolare" required>
+    </label><br>
+
+    <label>Data di Scadenza:
+        <input type="date" name="data_di_scadenza" required>
+    </label><br>
+
+    <label>Tipo:
+        <select name="tipo" required>
+            <option value="Visa">Visa</option>
+            <option value="Mastercard">Mastercard</option>
+            <option value="Amex">Amex</option>
+        </select>
+    </label><br><br>
+
+    <button type="submit" name="aggiungi_carta">Aggiungi Carta</button>
 </form>
+
+<hr>
+
+<h3>Le Tue Carte</h3>
+{% if carte %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Numero</th>
+                <th>Nome Titolare</th>
+                <th>Scadenza</th>
+                <th>Tipo</th>
+                <th>Azioni</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for carta in carte %}
+            <tr>
+                <td>{{ carta.numero_di_carta }}</td>
+                <td>{{ carta.nome_titolare }}</td>
+                <td>{{ carta.data_di_scadenza }}</td>
+                <td>{{ carta.tipo }}</td>
+                <td>
+                    <form method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="codice_metodo" value="{{ carta.codice_metodo_di_pagamento }}">
+                        <button type="submit" name="rimuovi_carta" onclick="return confirm('Rimuovere questa carta?');">
+                            Rimuovi
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>Non hai ancora carte salvate.</p>
+{% endif %}
+
+<a href="{% url 'dashboard' %}">Torna a home</a>
+
 {% endblock %}

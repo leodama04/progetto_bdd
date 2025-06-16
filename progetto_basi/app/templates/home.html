@@ -4,8 +4,8 @@
 <h2>Login</h2>
 <form method="post" action="">
     {% csrf_token %}
-    <label for="nome">Nome utente:</label>
-    <input type="text" name="nome" id="nome" required><br>
+    <label for="id_utente">ID Utente:</label>
+    <input type="text" name="id_utente" id="id_utente" required><br>
 
     <label for="password">Password:</label>
     <input type="password" name="password" id="password" required><br>
@@ -19,3 +19,4 @@
 
 <p>Non sei ancora registrato? <a href="{% url 'registra_utente' %}">Registrati qui</a></p>
 {% endblock %}
+

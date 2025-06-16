@@ -1,0 +1,30 @@
+<h2>Gestione artisti evento {{ evento_id }}</h2>
+
+<h3>Artisti associati</h3>
+<ul>
+  {% for artista in artisti_associati %}
+    <li>
+      {{ artista.nome }}
+      <form method="post" style="display:inline;">
+        {% csrf_token %}
+        <input type="hidden" name="codice_artista" value="{{ artista.codice_artista }}">
+        <button type="submit" name="rimuovi_artista">Rimuovi</button>
+      </form>
+    </li>
+  {% empty %}
+    <li>Nessun artista associato</li>
+  {% endfor %}
+</ul>
+
+<h3>Aggiungi artista</h3>
+<form method="post">
+  {% csrf_token %}
+  <select name="codice_artista" required>
+    {% for artista in artisti_disponibili %}
+      <option value="{{ artista.codice_artista }}">{{ artista.nome }}</option>
+    {% endfor %}
+  </select>
+  <button type="submit" name="aggiungi_artista">Aggiungi</button>
+</form>
+
+<a href="{% url 'gestione_eventi' %}">Torna a Gestione Eventi</a>

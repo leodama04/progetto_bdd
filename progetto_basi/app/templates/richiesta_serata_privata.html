@@ -1,10 +1,52 @@
 {% extends "form_base.html" %}
+
 {% block title %}Richiesta Serata Privata{% endblock %}
-{% block header %}Richiedi Serata Privata{% endblock %}
+{% block header %}Invia Richiesta Serata Privata{% endblock %}
+
 {% block content %}
-<form method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Invia Richiesta</button>
+<form method="post">
+    {% csrf_token %}
+
+    <label>Numero Invitati: 
+        <input type="number" name="numero_invitati" min="1" required>
+    </label><br><br>
+
+    <label>Descrizione: 
+        <textarea name="descrizione" rows="4"></textarea>
+    </label><br><br>
+
+    <label>Ora Inizio: 
+        <input type="time" name="ora_inizio">
+    </label><br><br>
+
+    <label>Ora Fine: 
+        <input type="time" name="ora_fine">
+    </label><br><br>
+
+    <label>Data Serata: 
+        <input type="date" name="data_serata" required>
+    </label><br><br>
+
+    <label>Genere:
+        <input type="text" name="genere" maxlength="100" required>
+    </label><br><br>
+
+    <label>Nome Evento: 
+        <input type="text" name="nome_evento" maxlength="100" required>
+    </label><br><br>
+
+    <button type="submit">Invia Richiesta</button>
 </form>
+
+{% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+<a href="{% url 'dashboard' %}">Torna a home</a>
+
+
 {% endblock %}

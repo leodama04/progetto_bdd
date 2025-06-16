@@ -2,11 +2,27 @@
 {% block title %}I Miei Biglietti{% endblock %}
 {% block header %}Biglietti Acquistati{% endblock %}
 {% block content %}
-<ul>
   {% for biglietto in biglietti %}
-    <li>Biglietto n. {{ biglietto.codice_biglietto }} - Evento: {{ biglietto.evento_nome }} - Data: {{ biglietto.data }}</li>
+    <div style="padding: 10px 0;">
+      <p><strong>Codice:</strong> {{ biglietto.codice_biglietto }}</p>
+      <p><strong>Evento:</strong> {{ biglietto.nome_evento }}</p>
+      <p><strong>Data:</strong> {{ biglietto.data_evento }}</p>
+      <p><strong>Prezzo:</strong> {{ biglietto.prezzo_biglietto }}€</p>
+      <p><strong>Tipo:</strong>
+        {% if biglietto.tipo_biglietto == 'T' %}
+          Tavolo
+        {% else %}
+          Standard
+        {% endif %}
+      </p>
+      {% if biglietto.tipo_biglietto == 'T' %}
+        <p><strong>Tavolo:</strong> {{ biglietto.nome_tavolo }} (Posti: {{ biglietto.posti_massimi }}, Area: {{ biglietto.area }})</p>
+      {% endif %}
+    </div>
+    <hr>
   {% empty %}
-    <li>Non hai biglietti acquistati.</li>
+    <p>Non hai biglietti acquistati.</p>
   {% endfor %}
-</ul>
+
+  <a href="{% url 'dashboard' %}">Torna a home</a>
 {% endblock %}

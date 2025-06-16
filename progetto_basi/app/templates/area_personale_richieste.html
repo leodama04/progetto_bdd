@@ -4,9 +4,22 @@
 {% block content %}
 <ul>
   {% for richiesta in richieste %}
-    <li>Richiesta n. {{ richiesta.codice_richiesta }} - Stato: {{ richiesta.stato }} - Data: {{ richiesta.data_serata }}</li>
+    <li>
+      Nome Serata: {{ richiesta.nome_evento }} -
+      Richiesta n. {{ richiesta.codice_richiesta }} -
+      Stato: {{ richiesta.stato }} -
+      Data: {{ richiesta.data_serata }}
+
+      {% if richiesta.stato == 'A' %}
+        <form method="get" action="{% url 'acquisto_serata_privata' richiesta.codice_richiesta %}" style="display:inline;">
+          <button type="submit">Acquista</button>
+        </form>
+      {% endif %}
+    </li>
   {% empty %}
     <li>Non hai richieste pendenti.</li>
   {% endfor %}
 </ul>
+
+<a href="{% url 'dashboard' %}">Torna a home</a>
 {% endblock %}

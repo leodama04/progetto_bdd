@@ -33,8 +33,14 @@ class Artista(models.Model):
 
 
 class Biglietto(models.Model):
+
+    TIPO_BIGLIETTO = (
+        ('S', 'Standard'),
+        ('T', 'Tavolo'),
+    )
+
     codice_biglietto = models.CharField(primary_key=True, max_length=10)
-    tipo = models.CharField(max_length=50, blank=True, null=True)
+    tipo = models.CharField(max_length=1, choices=TIPO_BIGLIETTO, default='S')
     prezzo = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     codice_evento = models.ForeignKey('Evento', models.DO_NOTHING, db_column='codice_evento', blank=True, null=True)
     codice_tavolo = models.ForeignKey('Tavolo', models.DO_NOTHING, db_column='codice_tavolo', blank=True, null=True)
@@ -64,17 +70,33 @@ class CartaDiCredito(models.Model):
 
 
 class Evento(models.Model):
-    codice_evento = models.CharField(primary_key=True, max_length=10)
+    TIPO_EVENTO = (
+        ('pubblico', 'Pubblico'),
+        ('privato', 'Privato'),
+    )
+
+    codice_evento = models.CharField(
+        primary_key=True,
+        max_length=10,
+        editable=False,
+        unique=True
+    )
     nome = models.CharField(max_length=100)
     descrizione = models.TextField(blank=True, null=True)
     data = models.DateField()
     ora_inizio = models.TimeField(blank=True, null=True)
     ora_fine = models.TimeField(blank=True, null=True)
-    tipo = models.CharField(max_length=20, blank=True, null=True)
+    tipo = models.CharField(max_length=20, choices=TIPO_EVENTO, default='pubblico', editable=False)
     genere = models.CharField(max_length=50, blank=True, null=True)
     prezzo = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     numero_partecipanti = models.IntegerField(blank=True, null=True)
-    codice_richiesta = models.ForeignKey('RichiestaPrenotazioneSerata', models.DO_NOTHING, db_column='codice_richiesta', blank=True, null=True)
+    codice_richiesta = models.ForeignKey(
+        'RichiestaPrenotazioneSerata',
+        models.DO_NOTHING,
+        db_column='codice_richiesta',
+        blank=True,
+        null=True
+    )
 
     class Meta:
         db_table = 'evento'
@@ -118,21 +140,34 @@ class Pr(models.Model):
 
 
 class RichiestaPrenotazioneSerata(models.Model):
+
+    STATO = [
+        ('A', 'Acettata'),
+        ('R', 'Rifiutata'),
+        ('P', 'In attesa di risposta'),
+    ]
+
     codice_richiesta = models.CharField(primary_key=True, max_length=10)
     numero_invitati = models.IntegerField(blank=True, null=True)
     descrizione = models.TextField(blank=True, null=True)
-    stato = models.CharField(max_length=9)
+    stato = models.CharField(max_length=1, choices=STATO)
     ora_inizio = models.TimeField(blank=True, null=True)
     ora_fine = models.TimeField(blank=True, null=True)
     data_serata = models.DateField(blank=True, null=True)
     id_utente = models.ForeignKey('Utente', models.DO_NOTHING, db_column='id_utente', blank=True, null=True)
+    nome_evento = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         db_table = 'richiesta_prenotazione_serata'
 
 
 class Tavolo(models.Model):
-    codice_tavolo = models.CharField(primary_key=True, max_length=10)
+    codice_tavolo = models.CharField(
+        primary_key=True,
+        max_length=10,
+        editable=False,
+        unique=True
+    )
     posti_massimi = models.IntegerField(blank=True, null=True)
     nome = models.CharField(max_length=50, blank=True, null=True)
     area = models.CharField(max_length=50, blank=True, null=True)
@@ -143,12 +178,17 @@ class Tavolo(models.Model):
 
 
 class Utente(models.Model):
+    RUOLO_CHOICES = [
+        ('A', 'Amministratore'),
+        ('C', 'Cliente'),
+    ]
+
     id_utente = models.CharField(primary_key=True, max_length=10)
     nome = models.CharField(max_length=50)
     cognome = models.CharField(max_length=50)
     data_di_nascita = models.DateField()
     telefono = models.CharField(max_length=20, blank=True, null=True)
-    ruolo = models.CharField(max_length=7)
+    ruolo = models.CharField(max_length=1, choices=RUOLO_CHOICES)
     password = models.CharField(max_length=100)
 
     class Meta:

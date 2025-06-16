@@ -1,10 +1,33 @@
 {% extends "form_base.html" %}
+
 {% block title %}Acquisto Serata Privata{% endblock %}
 {% block header %}Acquista Serata Privata{% endblock %}
+
 {% block content %}
-<form method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Acquista</button>
-</form>
+  <p><strong>Evento:</strong> {{ evento.nome }}</p>
+  <p><strong>Prezzo:</strong> € {{ evento.prezzo }}</p>
+
+  {% if errore %}
+    <p style="color:red;">{{ errore }}</p>
+  {% endif %}
+
+  <form method="POST">
+    {% csrf_token %}
+
+    <label for="carta_selezionata">Scegli carta di credito:</label>
+    <select name="carta_selezionata" id="carta_selezionata" required>
+        {% for carta in carte %}
+            <option value="{{ carta.codice_metodo_di_pagamento }}">
+                Carta {{ carta.numero_di_carta }} - Titolare: {{ carta.nome_titolare }} - Scadenza: {{ carta.data_di_scadenza }}
+            </option>
+        {% empty %}
+            <option disabled>Nessuna carta disponibile</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+    <button type="submit">Acquista</button>
+  </form>
+
+  <a href="{% url 'area_personale_richieste' %}">Torna a Area Personale Richieste</a>
 {% endblock %}

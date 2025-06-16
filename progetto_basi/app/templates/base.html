@@ -51,15 +51,8 @@
                 <!-- Link generali per utenti loggati -->
                 <a href="{% url 'dashboard' %}">Dashboard</a>
                 <a href="{% url 'mostra_serate_pubbliche' %}">Serate Pubbliche</a>
-                <a href="{% url 'area_personale_biglietti' %}">Biglietti</a>
-                <a href="{% url 'area_personale_richieste' %}">Richieste</a>
-                <a href="{% url 'area_personale_serate_acquistate' %}">Serate Acquistate</a>
                 <a href="{% url 'aggiungi_carta' %}">Aggiungi Carta</a>
-                <a href="{% url 'acquista_biglietto_view' %}">Acquista Biglietto</a>
-                <a href="{% url 'seleziona_tavolo_view' %}">Seleziona Tavolo</a>
-                <a href="{% url 'iscrizione_lista_pr_view' %}">Iscrizione Lista PR</a>
-                <a href="{% url 'richiesta_serata_privata_view' %}">Richiedi Serata Privata</a>
-                <a href="{% url 'acquisto_serata_privata_view' %}">Acquisto Serata Privata</a>
+                <a href="{% url 'richiesta_serata_privata' %}">Richiedi Serata Privata</a>
 
                 <!-- Se sei admin, mostra anche link amministratore -->
                 {% if request.session.ruolo == 'amministratore' %}
@@ -81,19 +74,17 @@
                 <!-- Link per utenti non loggati -->
                 <a href="{% url 'login' %}">Login</a>
                 <a href="{% url 'registra_utente' %}">Registrazione</a>
-                <a href="{% url 'mostra_serate_pubbliche' %}">Serate Pubbliche</a>
             {% endif %}
         </nav>
     </header>
 
     <main>
         {% block content %}
-        <!-- Contenuto specifico di ogni pagina -->
         {% endblock %}
     </main>
 
     <footer>
-        &copy; 2025 Gestione Eventi - Tutti i diritti riservati
+        &copy; Sito discoteca - Tutti i diritti riservati
     </footer>
 </body>
 </html>

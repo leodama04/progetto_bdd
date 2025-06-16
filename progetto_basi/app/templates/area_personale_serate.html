@@ -4,9 +4,13 @@
 {% block content %}
 <ul>
   {% for serata in serate %}
-    <li>{{ serata.nome }} - Data: {{ serata.data }} - Descrizione: {{ serata.descrizione }}</li>
+    <li>Nome: {{ serata.nome_evento }} - Data Acquisto: {{ serata.data_acquisto_serata }} - Descrizione: {{ serata.descrizione }} - Importo: {{ serata.importo }}</li>
   {% empty %}
     <li>Non hai serate acquistate.</li>
   {% endfor %}
 </ul>
+
+<a href="{% url 'dashboard' %}">Torna a home</a>
+
+
 {% endblock %}

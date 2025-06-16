@@ -1,0 +1,11 @@
+{% extends "form_base.html" %}
+
+{% block title %}Acquisto Confermato{% endblock %}
+
+{% block header %}Acquisto Confermato{% endblock %}
+
+{% block content %}
+<h2>Acquisto completato con successo!</h2>
+<p>Il tuo codice biglietto è: <strong>{{ codice_biglietto }}</strong></p>
+<a href="{% url 'mostra_serate_pubbliche' %}">Torna alle serate</a>
+{% endblock %}

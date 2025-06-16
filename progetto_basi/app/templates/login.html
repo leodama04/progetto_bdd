@@ -4,10 +4,18 @@
 {% block content %}
 <form method="POST">
   {% csrf_token %}
-  <p><label for="id_nome">Nome:</label>
-  <input type="text" id="id_nome" name="nome" required></p>
-  <p><label for="id_password">Password:</label>
-  <input type="password" id="id_password" name="password" required></p>
+  <p>
+    <label for="id_id_utente">ID Utente:</label>
+    <input type="text" id="id_id_utente" name="id_utente" required>
+  </p>
+  <p>
+    <label for="id_password">Password:</label>
+    <input type="password" id="id_password" name="password" required>
+  </p>
   <button type="submit">Accedi</button>
 </form>
+
+<a href="{% url 'home' %}">Torna a home</a>
+
 {% endblock %}
+

@@ -1,11 +1,32 @@
-{% extends "form_base.html" %}
-{% block title %}Iscrizione Lista PR{% endblock %}
-{% block header %}Iscriviti alla Lista PR{% endblock %}
-{% block content %}
-<form method="POST">
-  {% csrf_token %}
-  <p><label for="id_codice_lista">Codice Lista:</label>
-  <input type="text" id="id_codice_lista" name="codice_lista" required></p>
-  <button type="submit">Iscriviti</button>
-</form>
-{% endblock %}
+<h2>Liste PR per l'evento: {{ evento.nome }}</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nome Lista</th>
+            <th>Azione</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for lista in liste_pr %}
+        <tr>
+            <td>{{ lista.nome_lista }}</td>
+            <td>
+                <form method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="codice_lista" value="{{ lista.codice_lista }}">
+                    {% if lista.codice_lista in codici_iscritti %}
+                        <button type="submit" name="azione" value="disiscrivi">Disiscrivi</button>
+                    {% else %}
+                        <button type="submit" name="azione" value="iscrivi">Iscriviti</button>
+                    {% endif %}
+                </form>
+            </td>
+        </tr>
+    {% empty %}
+        <tr><td colspan="2">Nessuna lista PR disponibile.</td></tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'mostra_serate_pubbliche' %}">Torna a pagina serate pubbliche</a>
+

@@ -11,12 +11,14 @@
     <li><a href="{% url 'area_personale_serate_acquistate' %}">Le mie serate acquistate</a></li>
 
     {% if user_is_admin %}
-    <li><a href="{% url 'aggiungi_evento_view' %}">Aggiungi Evento (Admin)</a></li>
-    <li><a href="{% url 'accetta_rifiuta_richiesta_view' %}">Gestisci richieste (Admin)</a></li>
-    <!-- altri link admin -->
+    <li><a href="{% url 'gestione_eventi' %}">Gestione Eventi</a></li>
+    <li><a href="{% url 'gestione_richieste' %}">Gestione Richieste</a></li>
+    <li><a href="{% url 'gestione_artisti_db' %}">Gestione Artisti</a></li>
+    <li><a href="{% url 'gestione_pr_db' %}">Gestione PR</a></li>
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+
+    {% else %}
+    <li><a href="{% url 'logout' %}">Logout</a></li>
     {% endif %}
 </ul>
-
-<a href="{% url 'logout' %}">Logout</a>
-
 {% endblock %}

@@ -1,30 +1,39 @@
 {% extends "form_base.html" %}
 
-{% block title %}Acquista Biglietti{% endblock %}
+{% block title %}Acquista Biglietto Tavolo{% endblock %}
 
-{% block header %}Acquista Biglietti{% endblock %}
+{% block header %}Acquista Biglietto Tavolo per: {{ evento.nome }}{% endblock %}
 
 {% block content %}
-<h2>Acquista biglietto per: {{ evento.nome }}</h2>
 <p>Prezzo: <strong>{{ evento.prezzo }}€</strong></p>
 
 <form method="post">
     {% csrf_token %}
     
+    <label for="tavolo_selezionato">Scegli il tavolo:</label>
+    <select name="tavolo_selezionato" id="tavolo_selezionato" required>
+        {% for tavolo in tavoli %}
+            <option value="{{ tavolo.codice_tavolo }}">
+                {{ tavolo.nome }} - Posti: {{ tavolo.posti_massimi }} - Area: {{ tavolo.area }}
+            </option>
+        {% empty %}
+            <option disabled>Nessun tavolo disponibile</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+
     <label for="carta_selezionata">Scegli carta di credito:</label>
     <select name="carta_selezionata" id="carta_selezionata" required>
         {% for carta in carte %}
             <option value="{{ carta.codice_metodo_di_pagamento }}">
                 Carta {{ carta.numero_di_carta }} - Titolare: {{ carta.nome_titolare }} - Scadenza: {{ carta.data_di_scadenza }}
             </option>
-        {% empty %}
-            <option disabled>Nessuna carta disponibile</option>
         {% endfor %}
     </select>
 
-    
     <br><br>
-    <button type="submit">Acquista</button>
+    <button type="submit">Acquista Biglietto Tavolo</button>
 </form>
 
 <a href="{% url 'mostra_serate_pubbliche' %}">Torna a pagina serate pubbliche</a>

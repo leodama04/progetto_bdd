@@ -1,13 +1,51 @@
 {% extends "form_base.html" %}
+
 {% block title %}Gestione Richieste{% endblock %}
-{% block header %}Accetta o Rifiuta Richieste{% endblock %}
+{% block header %}Accetta o Rifiuta Richieste Serate Private{% endblock %}
+
 {% block content %}
-<form method="POST">
-  {% csrf_token %}
-  <p><label for="id_codice_richiesta">Codice Richiesta:</label>
-  <input type="text" id="id_codice_richiesta" name="codice_richiesta" required></p>
-  <p><label for="id_stato">Stato (accetta/rifiuta):</label>
-  <input type="text" id="id_stato" name="stato" required></p>
-  <button type="submit">Invia</button>
-</form>
+<h3>Richieste in Attesa</h3>
+
+{% if richieste %}
+<table border="1" cellpadding="6">
+  <thead>
+    <tr>
+      <th>Utente</th>
+      <th>Nome Serata</th>
+      <th>Data</th>
+      <th>Ora Inizio</th>
+      <th>Ora Fine</th>
+      <th>Partecipanti</th>
+      <th>Azioni</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for richiesta in richieste %}
+    <tr>
+      <td>{{ richiesta.id_utente }}</td>
+      <td>{{ richiesta.nome_evento }}</td>
+      <td>{{ richiesta.data_serata }}</td>
+      <td>{{ richiesta.ora_inizio }}</td>
+      <td>{{ richiesta.ora_fine }}</td>
+      <td>{{ richiesta.numero_invitati }}</td>
+      <td>
+        <form method="post" style="display:inline;">
+          {% csrf_token %}
+          <input type="hidden" name="codice_richiesta" value="{{ richiesta.codice_richiesta }}">
+          <button type="submit" name="stato" value="accetta">✅ Accetta</button>
+          <button type="submit" name="stato" value="rifiuta">❌ Rifiuta</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>Nessuna richiesta in attesa.</p>
+{% endif %}
+
+<br>
+<a href="{% url 'dashboard' %}">⬅ Torna alla home</a>
 {% endblock %}
+
+

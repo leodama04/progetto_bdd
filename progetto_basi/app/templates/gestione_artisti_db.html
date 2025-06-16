@@ -1,0 +1,40 @@
+{% extends "form_base.html" %}
+{% block title %}Gestione Artisti{% endblock %}
+{% block header %}Gestione Artisti{% endblock %}
+
+{% block content %}
+<h3>Aggiungi Artista</h3>
+<form method="post">
+    {% csrf_token %}
+    <label>Nome Artista: <input type="text" name="nome" required></label>
+    <button type="submit" name="aggiungi_artista">Aggiungi</button>
+</form>
+
+<hr>
+
+<h3>Artisti esistenti</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Azione</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for artista in artisti %}
+        <tr>
+            <td>{{ artista.nome }}</td>
+            <td>
+                <form method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="codice_artista" value="{{ artista.codice_artista }}">
+                    <button type="submit" name="rimuovi_artista" onclick="return confirm('Sei sicuro di voler rimuovere questo artista?');">Rimuovi</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3">Nessun artista presente.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

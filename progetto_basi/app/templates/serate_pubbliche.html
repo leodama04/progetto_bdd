@@ -1,12 +1,50 @@
-{% extends "form_base.html" %}
-{% block title %}Serate Pubbliche{% endblock %}
-{% block header %}Elenco Serate Pubbliche{% endblock %}
-{% block content %}
-<ul>
-  {% for serata in serate %}
-    <li>{{ serata.nome }} - {{ serata.data }} - {{ serata.descrizione }}</li>
-  {% empty %}
-    <li>Nessuna serata pubblica disponibile.</li>
-  {% endfor %}
-</ul>
-{% endblock %}
+<h2>Serate pubbliche</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Data</th>
+            <th>Ora Inizio</th>
+            <th>Ora Fine</th>
+            <th>Genere</th>
+            <th>Prezzo</th>
+            <th>Descrizione</th>
+            <th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for serata in serate %}
+        <tr>
+            <td>{{ serata.nome }}</td>
+            <td>{{ serata.data }}</td>
+            <td>{{ serata.ora_inizio }}</td>
+            <td>{{ serata.ora_fine }}</td>
+            <td>{{ serata.genere }}</td>
+            <td>{{ serata.prezzo }} €</td>
+            <td>{{ serata.descrizione }}</td>
+            <td>
+                <!-- Bottone per biglietto standard -->
+                <form method="get" action="{% url 'acquista_biglietto' serata.codice_evento %}" style="display:inline;">
+                    <button type="submit">Acquista Biglietto Standard</button>
+                </form>
+
+                <!-- Bottone per biglietto tavolo -->
+                <form method="get" action="{% url 'acquista_biglietto_tavolo' serata.codice_evento %}" style="display:inline; margin-left:5px;">
+                    <button type="submit">Acquista Biglietto Tavolo</button>
+                </form>
+                <!-- Bottone per iscrizione lista PR -->
+                <form method="get" action="{% url 'iscrizione_lista_pr' serata.codice_evento %}" style="display:inline; margin-left:5px;">
+                    <button type="submit">Iscriviti Lista PR</button>
+                </form>
+            </td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td colspan="8">Nessuna serata pubblica disponibile.</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'dashboard' %}">Torna a home</a>

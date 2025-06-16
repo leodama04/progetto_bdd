@@ -1,0 +1,15 @@
+{% extends "form_base.html" %}
+
+{% block title %}Acquisto Completato{% endblock %}
+
+{% block header %}Acquisto Serata Privata Completato{% endblock %}
+
+{% block content %}
+  <p>La tua serata privata è stata acquistata con successo!</p>
+
+  {% if codice_acquisto %}
+    <p><strong>Codice Acquisto:</strong> {{ codice_acquisto }}</p>
+  {% endif %}
+
+  <a href="{% url 'dashboard' %}">Torna alla dashboard</a>
+{% endblock %}

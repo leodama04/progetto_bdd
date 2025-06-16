@@ -1,0 +1,46 @@
+{% extends "form_base.html" %}
+{% block title %}Gestione PR{% endblock %}
+{% block header %}Gestione PR{% endblock %}
+
+{% block content %}
+<h3>Aggiungi PR</h3>
+<form method="post">
+    {% csrf_token %}
+    <label>Nome: <input type="text" name="nome" required></label><br>
+    <label>Cognome: <input type="text" name="cognome" required></label><br>
+    <button type="submit" name="aggiungi_pr">Aggiungi</button>
+</form>
+
+<hr>
+
+<h3>PR esistenti</h3>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Cognome</th>
+            <th>Azione</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pr in prs %}
+        <tr>
+            <td>{{ pr.nome }}</td>
+            <td>{{ pr.cognome }}</td>
+            <td>
+                <form method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="codice_pr" value="{{ pr.codice_pr }}">
+                    <button type="submit" name="rimuovi_pr" onclick="return confirm('Sei sicuro di voler rimuovere questo PR?');">Rimuovi</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="4">Nessun PR presente.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{% url 'dashboard' %}">Torna alla dashboard</a>
+
+{% endblock %}

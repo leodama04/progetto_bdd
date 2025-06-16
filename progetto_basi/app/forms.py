@@ -9,11 +9,13 @@ class AcquistoBigliettoForm(forms.ModelForm):
     class Meta:
         model = AcquistoBiglietto
         fields = '__all__'
+        exclude = ['codice_acquisto_biglietto']  
 
 class AcquistoSerataPrivataForm(forms.ModelForm):
     class Meta:
         model = AcquistoSerataPrivata
-        fields = '__all__'
+        fields = ['codice_metodo_di_pagamento']  
+
 
 class ArtistaForm(forms.ModelForm):
     class Meta:
@@ -35,10 +37,24 @@ class CartaDiCreditoForm(forms.ModelForm):
         model = CartaDiCredito
         fields = '__all__'
 
-class EventoForm(forms.ModelForm):
+class EventoPubblicoForm(forms.ModelForm):
     class Meta:
         model = Evento
         fields = '__all__'
+        exclude = ['tipo', 'codice_richiesta', 'numero_partecipanti']
+        widgets = {
+            'data': forms.DateInput(attrs={'type': 'date'}), 
+            'ora_inizio': forms.TimeInput(attrs={'type': 'time'}), 
+            'ora_fine': forms.TimeInput(attrs={'type': 'time'}),  
+        }
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.tipo = 'pubblico'
+        instance.numero_partecipanti = 0  
+        if commit:
+            instance.save()
+        return instance
 
 class IscrizioneForm(forms.ModelForm):
     class Meta:
@@ -69,11 +85,16 @@ class TavoloForm(forms.ModelForm):
     class Meta:
         model = Tavolo
         fields = '__all__'
+        exclude = ['codice_tavolo']
+
 
 class UtenteForm(forms.ModelForm):
+    ruolo = forms.ChoiceField(choices=[('A', 'Amministratore'), ('C', 'Cliente')], label="Ruolo")
+
     class Meta:
         model = Utente
         fields = '__all__'
         widgets = {
             'password': forms.PasswordInput(),  # Nascondi la password nel form
+            'data_di_nascita': forms.DateInput(attrs={'type': 'date'}),  # per una data picker HTML5
         }
